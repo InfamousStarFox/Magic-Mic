@@ -8,13 +8,25 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import info.dvkr.screenstream.R
+import info.dvkr.screenstream.data.image.AudioNotify
 import info.dvkr.screenstream.data.image.ImageNotify
 import info.dvkr.screenstream.domain.utils.Utils
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 
 
-class ImageNotifyImpl(context: Context) : ImageNotify {
+class AudioNotifyImpl(context: Context) : AudioNotify {
+    override fun getAudio(audioType: String): ByteArray {
+        Timber.i("[${Utils.getLogPrefix(this)}] getImage: $audioType")
+
+        return when (audioType) {
+            AudioNotify.AUDIO_TYPE_DEFAULT -> imageDefault
+            AudioNotify.AUDIO_TYPE_RELOAD_PAGE -> imageReloadPage
+            AudioNotify.AUDIO_TYPE_NEW_ADDRESS -> imageNewAddress
+            else -> ByteArray(0)
+        }
+    }
+
     private val defaultText: String = context.getString(R.string.image_generator_press_start)
     private val reloadPageText: String = context.getString(R.string.image_generator_reload_this_page)
     private val newAddressText: String = context.getString(R.string.image_generator_go_to_new_address)
