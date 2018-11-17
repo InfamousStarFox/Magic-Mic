@@ -4,7 +4,7 @@
 
     <!--StartActivity-->
     <string name="start_activity_name" translatable="false">Magic Mic</string>
-    <string name="start_activity_device_address">Device addresses:</string>
+    <string name="start_activity_device_address">View Stream in Browser:</string>
     <string name="start_activity_no_address">No address found</string>
     <string name="start_activity_start_stream">Start stream</string>
     <string name="start_activity_stop_stream">Stop stream</string>
