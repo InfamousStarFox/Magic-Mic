@@ -253,8 +253,6 @@ class FgService : Service(), FgView {
 
                     is FgView.ToEvent.NotifyImage -> {
                         jpegBytesStream.call(imageNotify.getImage(event.notifyType))
-                        jpegBytesStream.call(imageNotify.getImage(event.notifyType))
-                        jpegBytesStream.call(imageNotify.getImage(event.notifyType))
                     }
 
                     is FgService.LocalEvent.StartStream -> {
