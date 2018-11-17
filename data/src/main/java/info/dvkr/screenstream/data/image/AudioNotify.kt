@@ -9,5 +9,5 @@ interface AudioNotify {
         const val AUDIO_TYPE_RELOAD_PAGE = "AUDIO_TYPE_RELOAD_PAGE"
     }
 
-    fun getImage(imageType: String): ByteArray
+    fun getAudio(audioType: String): ByteArray
 }

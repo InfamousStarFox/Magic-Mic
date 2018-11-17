@@ -16,7 +16,6 @@ import android.os.Process.THREAD_PRIORITY_BACKGROUND
 import android.util.DisplayMetrics
 import android.view.Display
 import android.view.Surface
-import info.dvkr.screenstream.data.image.ImageGenerator.ImageGeneratorEvent
 import info.dvkr.screenstream.domain.utils.Utils
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
@@ -27,11 +26,11 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
-class ImageGeneratorImpl(
+class AudioGeneratorImpl(
     private val display: Display,
     private val mediaProjection: MediaProjection,
-    private val action: (ImageGeneratorEvent) -> Unit
-) : ImageGenerator {
+    private val action: (AudioGenerator.AudioGeneratorEvent) -> Unit
+) : AudioGenerator {
 
     companion object {
         private const val STATE_INIT = "STATE_INIT"
@@ -132,7 +131,7 @@ class ImageGeneratorImpl(
             state.set(STATE_STARTED)
         } catch (ex: SecurityException) {
             state.set(STATE_ERROR)
-            action(ImageGeneratorEvent.OnError(ex))
+            action(AudioGenerator.AudioGeneratorEvent.OnError(ex))
         }
     }
 
@@ -164,7 +163,7 @@ class ImageGeneratorImpl(
         }
 
         override fun onImageAvailable(reader: ImageReader) {
-            synchronized(this@ImageGeneratorImpl) {
+            synchronized(this@AudioGeneratorImpl) {
                 if (state.get() != STATE_STARTED || this != imageListener.get()) return
 
                 var image: Image? = null
@@ -172,7 +171,7 @@ class ImageGeneratorImpl(
                     image = reader.acquireLatestImage()
                 } catch (ex: UnsupportedOperationException) {
                     state.set(STATE_ERROR)
-                    action(ImageGeneratorEvent.OnError(ex))
+                    action(AudioGenerator.AudioGeneratorEvent.OnError(ex))
                     return
                 } catch (ignore: IllegalStateException) {
                 }
@@ -219,7 +218,7 @@ class ImageGeneratorImpl(
                     )
                     resizedBitmap.recycle()
 
-                    action(ImageGeneratorEvent.OnJpegImage(resultJpegStream.toByteArray()))
+                    action(AudioGenerator.AudioGeneratorEvent.OnAudio(resultJpegStream.toByteArray()))
                 }
             }
         }

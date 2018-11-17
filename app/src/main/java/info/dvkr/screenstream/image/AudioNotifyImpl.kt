@@ -9,7 +9,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import info.dvkr.screenstream.R
 import info.dvkr.screenstream.data.image.AudioNotify
-import info.dvkr.screenstream.data.image.ImageNotify
 import info.dvkr.screenstream.domain.utils.Utils
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -17,7 +16,7 @@ import java.io.ByteArrayOutputStream
 
 class AudioNotifyImpl(context: Context) : AudioNotify {
     override fun getAudio(audioType: String): ByteArray {
-        Timber.i("[${Utils.getLogPrefix(this)}] getImage: $audioType")
+        Timber.i("[${Utils.getLogPrefix(this)}] getAudio: $audioType")
 
         return when (audioType) {
             AudioNotify.AUDIO_TYPE_DEFAULT -> imageDefault
@@ -31,9 +30,9 @@ class AudioNotifyImpl(context: Context) : AudioNotify {
     private val reloadPageText: String = context.getString(R.string.image_generator_reload_this_page)
     private val newAddressText: String = context.getString(R.string.image_generator_go_to_new_address)
 
-    private val imageDefault: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateImage(defaultText) }
-    private val imageReloadPage: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateImage(reloadPageText) }
-    private val imageNewAddress: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateImage(newAddressText) }
+    private val imageDefault: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateAudio(defaultText) }
+    private val imageReloadPage: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateAudio(reloadPageText) }
+    private val imageNewAddress: ByteArray by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { generateAudio(newAddressText) }
 
     private val logo: Bitmap
 
@@ -43,18 +42,7 @@ class AudioNotifyImpl(context: Context) : AudioNotify {
         tempBm.recycle()
     }
 
-    override fun getImage(imageType: String): ByteArray {
-        Timber.i("[${Utils.getLogPrefix(this)}] getImage: $imageType")
-
-        return when (imageType) {
-            ImageNotify.IMAGE_TYPE_DEFAULT -> imageDefault
-            ImageNotify.IMAGE_TYPE_RELOAD_PAGE -> imageReloadPage
-            ImageNotify.IMAGE_TYPE_NEW_ADDRESS -> imageNewAddress
-            else -> ByteArray(0)
-        }
-    }
-
-    private fun generateImage(message: String): ByteArray {
+    private fun generateAudio(message: String): ByteArray {
         val bitmap = Bitmap.createBitmap(500, 400, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.drawRGB(69, 90, 100)

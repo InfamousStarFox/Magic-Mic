@@ -3,7 +3,7 @@ package info.dvkr.screenstream.data.presenter.foreground
 
 import com.jakewharton.rxrelay.BehaviorRelay
 import info.dvkr.screenstream.data.image.ImageGenerator
-import info.dvkr.screenstream.data.image.ImageGeneratorImpl
+import info.dvkr.screenstream.data.image.AudioGeneratorImpl
 import info.dvkr.screenstream.data.image.ImageNotify
 import info.dvkr.screenstream.domain.eventbus.EventBus
 import info.dvkr.screenstream.domain.globalstatus.GlobalStatus
@@ -84,7 +84,7 @@ open class FgPresenter(
                 }
 
                 is FgView.FromEvent.StartImageGenerator -> {
-                    val newImageGenerator = ImageGeneratorImpl(fromEvent.display, fromEvent.mediaProjection) { action ->
+                    val newImageGenerator = AudioGeneratorImpl(fromEvent.display, fromEvent.mediaProjection) { action ->
                         launch(CommonPool, parent = baseJob) {
                             when (action) {
                                 is ImageGenerator.ImageGeneratorEvent.OnError -> {

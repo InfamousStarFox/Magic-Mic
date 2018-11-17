@@ -4,11 +4,11 @@ import android.support.annotation.IntRange
 import android.support.annotation.Keep
 
 
-interface ImageGenerator {
+interface AudioGenerator {
 
-    @Keep sealed class ImageGeneratorEvent {
-        @Keep class OnJpegImage(val image: ByteArray) : ImageGeneratorEvent()
-        @Keep class OnError(val error: Throwable) : ImageGeneratorEvent()
+    @Keep sealed class AudioGeneratorEvent {
+        @Keep class OnAudio(val image: ByteArray) : AudioGeneratorEvent()
+        @Keep class OnError(val error: Throwable) : AudioGeneratorEvent()
     }
 
     fun setImageResizeFactor(@IntRange(from = 1, to = 150) factor: Int)
